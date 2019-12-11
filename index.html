@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,14 +8,43 @@
     <title>Document</title>
     <link rel="stylesheet" href="/css/style.css">
 </head>
-<body>
 
-      <nav class="main-nav"></nav>
-        <canvas class="canvas-container"></canvas>
+<body onload="init()">
 
-    <div class="controller-container"></div>
+    <nav class="main-nav">
+        <ul class="clean-list flex space-between">
+        <li>Logo</li>
+        <li>Gallery</li>
+        <li>About</li>
+    </ul>
+    </nav>
 
 
+    <div class="gallery" style="display: grid;"></div>
+
+    <div class="main-container" style="display:none;">
+        <div class="controller-container">
+           <span><button onclick=onchangeTextSize(+1) >+</button>
+            <button onclick=onchangeTextSize(-1) >-</button>
+           </span> 
+           <span><button onclick=onMoveLine(-1) >Up</button>
+            <button onclick=onMoveLine(+1) >Down</button>
+           </span> 
+           <span><button onclick=onChangeLine()>Switch Line</button></span>
+            <input  type="text" oninput="onTextInput()" class="input" placeholder="Enter Text">
+        </div>
+        <canvas id="canvas-container">
+        </canvas>
+    </div>
+
+    <footer class="footer flex row space-between"> 
+        <span>memegen</span>
+        <span>all rights reserved 2019</span>
+    </footer>
+
+    <script src="/js/memeService.js"></script>
     <script src="/js/memeController.js"></script>
+
 </body>
+
 </html>
