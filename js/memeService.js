@@ -83,8 +83,13 @@ function getlineY(lineIndex) {
 function updateCurrLine() {
     gCurrLine += gLineSwitcher
     gLineSwitcher *= -1
+    
 }
-
+function updateGlineSwitcher() {
+    if (gCurrLine===0 && gLineSwitcher===-1 ||gCurrLine===1 && gLineSwitcher===1) {
+        gCurrLine*=-1
+    }
+}
 
 
 
@@ -145,6 +150,13 @@ function getFont() {
 }
 
 function updategMemes() {
-gMemes.push(gMeme)
+var meme=gCanvas.toDataURL('image/jpeg')
+gMemes.push(meme)
 saveToStorage('gMemes', gMemes);
+}
+
+
+function loadData() {
+        gMemes = loadFromStorage('gMemes', []);
+        return gMemes
 }

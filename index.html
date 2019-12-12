@@ -14,8 +14,8 @@
     <nav class="main-nav">
         <ul class="clean-list flex space-between">
             <li><img class="logo" src="icons/logo.png"></li>
-            <li class="nav-txt" onclick="toggleCanvas()">Gallery</li>
-            <li class="nav-txt">About</li>
+            <li class="nav-txt" onclick="toggleGallery()">Gallery</li>
+            <li class="nav-txt" onclick="toggleMemeGallery()">Memes</li>
         </ul>
     </nav>
 
@@ -34,8 +34,9 @@
                         src="icons/up-and-down-opposite-double-arrows-side-by-side.png"></button></span>
             <span><button onclick=onDeleteLine()><img class="font" src="icons/trash.png"></button></span>
 
-            <span class="color font"><input type="color" class="font color-btn" onchange=onColorChange() value="#FFFFFF"></input></span>
-            <select class="font-input"  onchange="onChangeFont()">
+            <span class="color font"><input type="color" class="font color-btn" onchange=onColorChange()
+                    value="#FFFFFF"></input></span>
+            <select class="font-input" onchange="onChangeFont()">
                 <option value="IMPACT">IMPACT</option>
                 <option value="monospace">Monospace</option>
             </select>
@@ -44,11 +45,13 @@
             <button class="share" onclick=onSaveClicked()>Save</button>
             <div class="modal" style="display:none;">
                 <button class="download">
-                        <form action="" class='form' method="POST" enctype="multipart/form-data" onclick="onShareClicked(this, event)">
-                            <input  class="download" name="img" id="imgData" type="hidden" />Share on Facebook<div class="share-container"></div>
-                        </form>
+                    <form action="" class='form' method="POST" enctype="multipart/form-data"
+                        onclick="onShareClicked(this, event)">
+                        <input class="download" name="img" id="imgData" type="hidden" />Share on Facebook<div
+                            class="share-container"></div>
+                    </form>
                 </button>
-              
+
                 <button class="download"> <a href="#" onclick="downloadImg(this)"
                         download="my-canvas.jpg">Download</a></button>
             </div>
@@ -59,10 +62,10 @@
             </canvas>
 
         </div>
-
     </div>
-
-    <footer class="footer flex row space-between">
+    <div class="meme-container grid gallery" style="display:none;">
+    </div>
+    <footer class="footer flex flex.column space-around">
         <span><img class="logo" src="icons/logo.png"></span>
         <span class="footer-txt">All rights reserved 2019</span>
     </footer>

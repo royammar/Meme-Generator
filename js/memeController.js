@@ -46,6 +46,8 @@ function renderImgGallery() {
     elGallary.innerHTML = strHTML.join('')
 }
 
+
+
 function onImgSelceted(imgId) {
     toggleCanvas()
     gCurrImg = getImgToRender(imgId)
@@ -55,19 +57,39 @@ function onImgSelceted(imgId) {
 
 function toggleCanvas() {
     var elCanvas = document.querySelector(".main-container");
-    if (elCanvas.style.display === "none") {
+ 
         elCanvas.style.display = null;
-    } else {
+        var elGallary = document.querySelector(".gallery");
+        elGallary.style.display = "none";
+
+    }
+    function toggleGallery() {
+    var elGallary = document.querySelector(".gallery");
+  
+        elGallary.style.display ="grid";
+        var elCanvas = document.querySelector(".main-container");
+        elCanvas.style.display = "none";
+        var elMemeGallary = document.querySelector(".meme-container");
+        elMemeGallary.style.display = "none";
+        var elCanvas = document.querySelector(".main-container");
         elCanvas.style.display = "none";
     }
 
-    var elGallary = document.querySelector(".gallery");
-    if (elGallary.style.display === "grid") {
-        elGallary.style.display = "none";
-    } else {
-        elGallary.style.display = "grid";
-    }
+function toggleMemeGallery() {
+var memestoRender=loadData()
+var elMemeGallary = document.querySelector(".meme-container");
+elMemeGallary.style.display = 'grid';
+var elGallary = document.querySelector(".gallery");
+elGallary.style.display = "none";
+var elCanvas = document.querySelector(".main-container");
+elCanvas.style.display = "none";
+var strHTML = memestoRender.map(function (meme) {
+    return `<img src="${meme}" alt="" class="img"></img>`
+})
+elMemeGallary.innerHTML = strHTML.join('')
 }
+
+
 
 
 function onchangeTextSize(diff) {
@@ -103,6 +125,7 @@ function canvasClicked(ev) {
             ev.offsetY > y - fontSize) {
             gisclicked = true
             gCurrLine = i
+            updateGlineSwitcher()
             renderImg()
             document.querySelector('.input').value = txt
             document.querySelector(".color-btn").value = gMeme.txts[gCurrLine].color
@@ -169,7 +192,6 @@ function onShareClicked(elShare, ev) {
     var elModal = document.querySelector(".modal");
     elModal.style.display = 'none';
 }
-
 
 function onSaveClicked() {
 updategMemes()
