@@ -13,16 +13,13 @@ body {
     background-color: #e3e3e3;
   }
   
-  
-  form {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    border:1px solid #000;
-    margin:10px;
-    padding:5px;
+
+  .form:hover {
+   cursor: pointer;
+   opacity:0.5;
+   transition: 0.3s;
   }
-  
+   
   .btn {
     background: #4267b2;
     border: 1px solid #4267b2;
@@ -43,38 +40,39 @@ body {
     margin: 10px;
   }
 
-  .textarea{
-    overflow: hidden;
-    overflow-wrap: break-word;
-    resize: horizontal;
-    height: 20px;
+  .input{
+    width: 373px;
+    height: 60px;
+    border-radius: 12px;
+    background-color: var(--white);
+    font-size: 1.25rem;
   }
 
   .gallery {
-    height: 92vh;
-    width: 98vw;
+    height: 58.25rem;
+    width: 75rem;
     background-color: antiquewhite;
     border: 1px solid black;
     margin: 0 auto;
-   
     gap: 30px;
-    grid-template-columns: repeat(auto-fill,minmax(100px,1fr));
-    grid-auto-rows: 100px;
+    grid-template-columns: repeat(auto-fill,minmax(200px,1fr));
+    grid-auto-rows: 200px;
   }
 
 
 .img {
 width: 100%;
-height: auto;
-
-
+height: 100%;
+border: 0;
+padding: 0;
 }
 
 .main-nav{
-  width: 1200px;
-  height: 66px;
+  width: 100%;
+  height: 4.125rem;
   background-color: #ff7f00;
   color: #ffffff;
+  margin-bottom:1.625rem;
 }
 
 /* list helpers */
@@ -97,6 +95,10 @@ height: auto;
   flex-direction: row;
 }
 
+.flex.row-reverse{
+  flex-direction: row-reverse;
+}
+
 .flex.wrap {
   flex-wrap: wrap;
 }
@@ -113,6 +115,8 @@ height: auto;
   justify-content: space-around;
 }
 
+
+
 .clean-list {
   margin: 0;
   padding: 0;
@@ -121,10 +125,170 @@ height: auto;
 
 
 .footer{
-    width: 1200px;
-    height: 207px;
+    width: 100%;
+    height: 12.9375rem;
     background-color: #ff7f00;
     color: #ffffff;
     text-align: center;
 }
 
+.canvas-container{
+  height:34.4375rem ;
+  width:33.8125rem ;
+margin-left: 3.1875rem;
+margin-right: 6.25rem;
+margin-bottom: 1.4375rem;
+padding: 0;
+border: 0;
+
+}
+
+#canvas-container{
+height: auto;
+width: auto;
+}
+
+.font{
+  width: 60px;
+  height: 60px;
+  border-radius: 12px;
+  background-color: var(--white);
+}
+
+.logo{
+  width: 133px;
+  height: 22px;
+  background-color: var(--white);
+}
+
+.nav-txt{
+  width: 66px;
+  height: 19px;
+  font-family: Montserrat;
+  font-size: 19px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: center;
+  color: white;
+}
+
+
+.footer-txt{
+  width: 206px;
+  height: 19px;
+  font-family: Montserrat;
+  font-size: 19px;
+  font-weight: 100;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: center;
+  color: var(--white);
+}
+
+.nav-txt:hover{
+cursor: pointer;
+color: #040a2c;
+}
+
+.img:hover {
+cursor: pointer;
+opacity:0.5;
+transition: 0.3s;
+
+}
+
+.font-input {
+  width: 218px;
+  height: 60px;
+  border-radius: 12px;
+  background-color: var(--white);
+  font-family: Montserrat;
+  font-size: 20px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: center;
+  color: #000000;
+  cursor: pointer; 
+}
+
+
+
+/* .color-btn{ */
+  /* opacity: 0; */
+  /* background-image: url(/icons/paint-board-and-brush.png);
+  width: 100%;
+  height: 100%; ; */
+/* border-radius: 12px; */
+/* background-color: var(--white); */
+
+
+/* .color{
+/* background-image: url(/icons/paint-board-and-brush.png);
+width: 60px;
+height: 60px; */
+/* }  */
+/* border-radius: 12px; */
+/* background-color: var(--white);*/
+
+.share {
+  font-family: Montserrat;
+  font-size: 20px;
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: center;
+  color: white;
+  width: 120px;
+  height: 60px;
+  border-radius: 12px;
+  background-color: #ff7f00;
+}
+
+
+.modal {
+  width: 211px;
+  height: 202px;
+  border-radius: 12px;
+  background-color: var(--white);
+}
+
+.download{
+  width: 120px;
+  height: 60px;
+  border-radius: 12px;
+  background-color: #ff7f00;
+  font-family: Montserrat;
+  font-size: 20px;
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: center;
+  color: var(--white);
+
+}
+
+.font:hover{
+
+  cursor: pointer;
+  opacity:0.5;
+  transition: 0.3s;
+}
+
+.share:hover {
+
+  cursor: pointer;
+  opacity:0.5;
+  transition: 0.3s;
+}

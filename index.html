@@ -6,45 +6,71 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
-    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="css/style.css">
 </head>
 
-<body onload="init()">
+<body onload="init()" onmouseup="stop()">
 
     <nav class="main-nav">
         <ul class="clean-list flex space-between">
-        <li>Logo</li>
-        <li>Gallery</li>
-        <li>About</li>
-    </ul>
+            <li><img class="logo" src="icons/logo.png"></li>
+            <li class="nav-txt" onclick="toggleCanvas()">Gallery</li>
+            <li class="nav-txt">About</li>
+        </ul>
     </nav>
 
 
     <div class="gallery" style="display: grid;"></div>
 
-    <div class="main-container" style="display:none;">
+    <div class="main-container flex row-reverse space-around" style="display:none;">
         <div class="controller-container">
-           <span><button onclick=onchangeTextSize(+1) >+</button>
-            <button onclick=onchangeTextSize(-1) >-</button>
-           </span> 
-           <span><button onclick=onMoveLine(-1) >Up</button>
-            <button onclick=onMoveLine(+1) >Down</button>
-           </span> 
-           <span><button onclick=onChangeLine()>Switch Line</button></span>
-            <input  type="text" oninput="onTextInput()" class="input" placeholder="Enter Text">
+            <span><button onclick=onchangeTextSize(+1)><img class="font" src="icons/increase font - icon.png"></button>
+                <button onclick=onchangeTextSize(-1)><img class="font" src="icons/decrease font - icon.png"></button>
+            </span>
+            <span><button onclick=onMoveLine(-1)><img class="font" src="icons/arrow up.png"></button>
+                <button onclick=onMoveLine(+1)><img class="font" src="icons/arrow down.png"></button>
+            </span>
+            <span><button onclick=onChangeLine()><img class="font"
+                        src="icons/up-and-down-opposite-double-arrows-side-by-side.png"></button></span>
+            <span><button onclick=onDeleteLine()><img class="font" src="icons/trash.png"></button></span>
+
+            <span class="color font"><input type="color" class="font color-btn" onchange=onColorChange() value="#FFFFFF"></input></span>
+            <select class="font-input"  onchange="onChangeFont()">
+                <option value="IMPACT">IMPACT</option>
+                <option value="monospace">Monospace</option>
+            </select>
+            <input type="text" oninput="onTextInput()" class="input" placeholder="Enter Text">
+            <button class="share" onclick=onShareClick()>Share</button>
+            <button class="share" onclick=onSaveClicked()>Save</button>
+            <div class="modal" style="display:none;">
+                <button class="download">
+                        <form action="" class='form' method="POST" enctype="multipart/form-data" onclick="onShareClicked(this, event)">
+                            <input  class="download" name="img" id="imgData" type="hidden" />Share on Facebook<div class="share-container"></div>
+                        </form>
+                </button>
+              
+                <button class="download"> <a href="#" onclick="downloadImg(this)"
+                        download="my-canvas.jpg">Download</a></button>
+            </div>
+
         </div>
-        <canvas id="canvas-container">
-        </canvas>
+        <div class="canvas-container">
+            <canvas id="canvas-container" onmousemove="draw(event)" onmousedown="canvasClicked(event)">
+            </canvas>
+
+        </div>
+
     </div>
 
-    <footer class="footer flex row space-between"> 
-        <span>memegen</span>
-        <span>all rights reserved 2019</span>
+    <footer class="footer flex row space-between">
+        <span><img class="logo" src="icons/logo.png"></span>
+        <span class="footer-txt">All rights reserved 2019</span>
     </footer>
 
-    <script src="/js/memeService.js"></script>
-    <script src="/js/memeController.js"></script>
-
+    <script src="js/memeService.js"></script>
+    <script src="js/memeController.js"></script>
+    <script src="js/upload-service.js"></script>
+    <script src="js/storage-service.js"></script>
 </body>
 
 </html>

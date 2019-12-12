@@ -1,17 +1,17 @@
 'use strict'
-
+var gMemes=[]
 var gCanvas = ''
 var gCtx = ''
 var gCurrImg = ''
 var gid = 0
 var gLineSwitcher = 1
-
+var gFont = 'Impact'
 var gCurrLine = 0
 var gKeywords = { 'happy': 12, 'funny puk': 1 }
 var gMeme = {
     selectedImgId: 0, selectedTxtIdx: 0,
-    txts: [{ line: '', size: 20, align: 'left', color: 'white', Xpos: 50, Ypos: 20 },
-    { line: '', size: 20, align: 'left', color: 'white', Xpos: 50, Ypos: 430 }]
+    txts: [{ line: '', size: 20, align: 'left', color: '#FFFFFF', Xpos: 50, Ypos: 20 },
+    { line: '', size: 20, align: 'left', color: '#FFFFFF', Xpos: 50, Ypos: 430 }]
 }
 var gImgs = [{ id: 0, url: 'img/0.jpg', keywords: ['Funny'] },
 { id: 1, url: 'img/1.jpg', keywords: ['Cute', 'Puppy'] },
@@ -104,10 +104,47 @@ function drawTextBG(gCtx, txt, font, x, y) {
 
 
 function ClearTextBg(gCtx, txt, font, x, y) {
+    gCtx.save();
+    gCtx.fillStyle = '#f50';
     gCtx.font = font;
-    gCtx.textBaseline = 'center';
     var width = gCtx.measureText(txt).width;
     gCtx.clearRect(x, y - font + 4, width + 2, parseInt(font, 10));
+    gCtx.restore();
 }
 
 
+function deleteCurrLine() {
+    gMeme.txts[gCurrLine].line = ''
+    gMeme.txts[gCurrLine].size = 20
+    gMeme.txts[gCurrLine].Xpos = 50
+    if (gCurrLine === 0) {
+
+        gMeme.txts[gCurrLine].Ypos = 20
+    }
+    else {
+        gMeme.txts[gCurrLine].Ypos = 430
+    }
+}
+
+
+function updateColorLine(color) {
+    gMeme.txts[gCurrLine].color = color
+}
+
+function getFontColor(lineIndex) {
+    return gMeme.txts[lineIndex].color
+}
+
+
+function updateFont(font) {
+    gFont = font
+}
+
+function getFont() {
+    return gFont
+}
+
+function updategMemes() {
+gMemes.push(gMeme)
+saveToStorage('gMemes', gMemes);
+}

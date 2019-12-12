@@ -1,34 +1,28 @@
 'use strict'
-
+var gisclicked = false
 
 function init() {
     gCanvas = document.getElementById('canvas-container');
-    gCanvas.width = window.innerWidth - 50
-    gCanvas.height = window.innerHeight - 100;
+    gCanvas.width = 500
+    gCanvas.height = 500;
     gCtx = gCanvas.getContext('2d')
     renderImgGallery()
-    window.addEventListener('resize',
-        function () {
-            gCanvas = document.getElementById('canvas-container');
-            gCanvas.width = window.innerWidth - 50
-            gCanvas.height = window.innerHeight - 100;
-        })
 }
 
 
 function renderImg() {
-
     var gImg = new Image();
     gImg.src = gCurrImg
     gImg.onload = () => {
         gCtx.drawImage(gImg, 0, 0)
         for (var i = 0; i < gMeme.txts.length; i++) {
             var txt = getTextToRender(i)
-            var fontSize = getFontSize(i) + "px IMPACT"
+            var font = getFont()
+            var fontSize = getFontSize(i) + "px " + font
             var xPos = getlineX(i)
             var yPos = getlineY(i)
             gCtx.font = fontSize;
-            gCtx.fillStyle = 'white'
+            gCtx.fillStyle = getFontColor(i)
             if (gCurrLine === i) {
                 drawTextBG(gCtx, txt, getFontSize(i), xPos, yPos)
             }
@@ -49,8 +43,6 @@ function renderImgGallery() {
         return `<img src=${img.url} class="img" onclick="onImgSelceted(${img.id})">`
     })
     var elGallary = document.querySelector('.gallery')
-    console.log(elGallary);
-
     elGallary.innerHTML = strHTML.join('')
 }
 
@@ -64,7 +56,7 @@ function onImgSelceted(imgId) {
 function toggleCanvas() {
     var elCanvas = document.querySelector(".main-container");
     if (elCanvas.style.display === "none") {
-        elCanvas.style.display = "block";
+        elCanvas.style.display = null;
     } else {
         elCanvas.style.display = "none";
     }
@@ -92,7 +84,93 @@ function onChangeLine() {
     ClearTextBg(gCtx, getTextToRender(gCurrLine), getFontSize(gCurrLine), getlineX(gCurrLine), getlineY(gCurrLine))
     updateCurrLine()
     document.querySelector('.input').value = gMeme.txts[gCurrLine].line
+    document.querySelector(".color-btn").value = gMeme.txts[gCurrLine].color
     renderImg()
 }
 
 
+function canvasClicked(ev) {
+    for (var i = 0; i < gMeme.txts.length; i++) {
+        var x = getlineX(i)
+        var y = getlineY(i)
+        var txt = getTextToRender(i)
+        var width = gCtx.measureText(txt).width;
+        var fontSize = getFontSize(i)
+
+        if (ev.offsetX > x &&
+            ev.offsetX < x + width &&
+            ev.offsetY < y &&
+            ev.offsetY > y - fontSize) {
+            gisclicked = true
+            gCurrLine = i
+            renderImg()
+            document.querySelector('.input').value = txt
+            document.querySelector(".color-btn").value = gMeme.txts[gCurrLine].color
+        }
+    }
+}
+
+
+function draw(ev) {
+    if (!gisclicked) return
+    gMeme.txts[gCurrLine].Xpos = ev.offsetX
+    gMeme.txts[gCurrLine].Ypos = ev.offsetY
+    renderImg()
+
+}
+
+function stop() {
+    gisclicked = false
+}
+
+function onDeleteLine() {
+    deleteCurrLine()
+    document.querySelector('.input').value = ' '
+    renderImg()
+}
+
+
+function onColorChange() {
+    var color = document.querySelector(".color-btn").value;
+    updateColorLine(color)
+    renderImg()
+}
+
+
+function onChangeFont() {
+    var font = document.querySelector('.font-input').value
+    updateFont(font)
+    renderImg()
+}
+
+function onShareClick() {
+    var elModal = document.querySelector(".modal");
+    if (elModal.style.display === 'none') {
+        elModal.style.display = ''
+    }
+    else {
+        elModal.style.display = 'none';
+    }
+}
+
+
+
+function downloadImg(elLink) {
+
+    var imgContent = gCanvas.toDataURL('image/jpeg');
+    elLink.href = imgContent
+    var elModal = document.querySelector(".modal");
+    elModal.style.display = 'none';
+}
+
+
+function onShareClicked(elShare, ev) {
+    uploadImg(elShare, ev)
+    var elModal = document.querySelector(".modal");
+    elModal.style.display = 'none';
+}
+
+
+function onSaveClicked() {
+updategMemes()
+}
