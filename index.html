@@ -10,37 +10,58 @@
 </head>
 
 <body onload="init()" onmouseup="stop()">
-
+    <div class="screen" onclick="toggleMenu()"></div>
     <nav class="main-nav">
+    
         <ul class="clean-list flex space-between">
             <li><img class="logo" src="icons/logo.png"></li>
+           
             <li class="nav-txt" onclick="toggleGallery()">Gallery</li>
             <li class="nav-txt" onclick="toggleMemeGallery()">Memes</li>
         </ul>
     </nav>
 
-
-    <div class="gallery" style="display: grid;"></div>
-
+    <div class="search-box">
+            <label for="text">Enter search keyword</label>
+            <input id="text" class="search" oninput="onSearch()" type="text" multiple name="cc" list="keyword" />
+            <datalist id="keyword">
+                <option value="funny"></option>
+                <option value="cute"></option>
+                <option value="baby"></option>
+                <option value="animals"></option>
+            </datalist>
+        </div>
+    <div class="gallery" style="display: grid;">
+           
+    </div>
+    
     <div class="main-container flex row-reverse space-around" style="display:none;">
-        <div class="controller-container">
+        <div class="controller-container flex column space-around">
+            <div>
+            <input type="text" oninput="onTextInput()" class="input" placeholder="Enter Text">
+           
+            </div>
+            <div>
             <span><button onclick=onchangeTextSize(+1)><img class="font" src="icons/increase font - icon.png"></button>
                 <button onclick=onchangeTextSize(-1)><img class="font" src="icons/decrease font - icon.png"></button>
             </span>
             <span><button onclick=onMoveLine(-1)><img class="font" src="icons/arrow up.png"></button>
                 <button onclick=onMoveLine(+1)><img class="font" src="icons/arrow down.png"></button>
             </span>
-            <span><button onclick=onChangeLine()><img class="font"
-                        src="icons/up-and-down-opposite-double-arrows-side-by-side.png"></button></span>
+            <span><button onclick=onChangeLine()><img class="font" src="icons/up-and-down-opposite-double-arrows-side-by-side.png"></button></span>
+            <div>
             <span><button onclick=onDeleteLine()><img class="font" src="icons/trash.png"></button></span>
 
             <span class="color font"><input type="color" class="font color-btn" onchange=onColorChange()
-                    value="#FFFFFF"></input></span>
-            <select class="font-input" onchange="onChangeFont()">
-                <option value="IMPACT">IMPACT</option>
-                <option value="monospace">Monospace</option>
-            </select>
-            <input type="text" oninput="onTextInput()" class="input" placeholder="Enter Text">
+                    value="#FFFFFF"></input></span><br>
+                    <select class="font-input" onchange="onChangeFont()">
+                        <option value="IMPACT">IMPACT</option>
+                        <option value="monospace">Monospace</option>
+                    </select> 
+
+                </div>
+                </div>
+                <div>
             <button class="share" onclick=onShareClick()>Share</button>
             <button class="share" onclick=onSaveClicked()>Save</button>
             <div class="modal" style="display:none;">
@@ -55,16 +76,21 @@
                 <button class="download"> <a href="#" onclick="downloadImg(this)"
                         download="my-canvas.jpg">Download</a></button>
             </div>
-
+        </div>
         </div>
         <div class="canvas-container">
             <canvas id="canvas-container" onmousemove="draw(event)" onmousedown="canvasClicked(event)">
             </canvas>
-
+            <canvas id="temp-canvas-container"style="display:none; ">
+            </canvas>
         </div>
     </div>
     <div class="meme-container grid gallery" style="display:none;">
     </div>
+    <div class="meme-modal" style="display:none;"><img class="meme-img" src="" alt="">
+    </div>
+ 
+    <canvas id="temp-canvas"  style="display:none;"></canvas>
     <footer class="footer flex flex.column space-around">
         <span><img class="logo" src="icons/logo.png"></span>
         <span class="footer-txt">All rights reserved 2019</span>

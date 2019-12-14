@@ -1,11 +1,15 @@
 'use strict'
-var gisclicked = false
 
 function init() {
     gCanvas = document.getElementById('canvas-container');
     gCanvas.width = 500
     gCanvas.height = 500;
     gCtx = gCanvas.getContext('2d')
+    gTCanvas = document.getElementById('temp-canvas-container');
+    gTCanvas.width = 500
+    gTCanvas.height = 500;
+    gTCtx = gTCanvas.getContext('2d')
+
     renderImgGallery()
 }
 
@@ -15,6 +19,8 @@ function renderImg() {
     gImg.src = gCurrImg
     gImg.onload = () => {
         gCtx.drawImage(gImg, 0, 0)
+        gTCtx.drawImage(gImg, 0, 0)
+
         for (var i = 0; i < gMeme.txts.length; i++) {
             var txt = getTextToRender(i)
             var font = getFont()
@@ -22,15 +28,21 @@ function renderImg() {
             var xPos = getlineX(i)
             var yPos = getlineY(i)
             gCtx.font = fontSize;
+            gTCtx.font = fontSize;
             gCtx.fillStyle = getFontColor(i)
+            gTCtx.fillStyle = getFontColor(i)
             if (gCurrLine === i) {
                 drawTextBG(gCtx, txt, getFontSize(i), xPos, yPos)
             }
             gCtx.fillText(txt, xPos, yPos);
             gCtx.strokeText(txt, xPos, yPos);
+            gTCtx.fillText(txt, xPos, yPos);
+            gTCtx.strokeText(txt, xPos, yPos);
+
         }
     }
 }
+
 
 function onTextInput() {
     var txt = document.querySelector('.input').value
@@ -39,7 +51,10 @@ function onTextInput() {
 }
 
 function renderImgGallery() {
-    var strHTML = gImgs.map(function (img) {
+    var imgsToRender=getImgsToRender()
+    console.log(imgsToRender);
+    
+    var strHTML = imgsToRender.map(function (img) {
         return `<img src=${img.url} class="img" onclick="onImgSelceted(${img.id})">`
     })
     var elGallary = document.querySelector('.gallery')
@@ -57,39 +72,52 @@ function onImgSelceted(imgId) {
 
 function toggleCanvas() {
     var elCanvas = document.querySelector(".main-container");
- 
-        elCanvas.style.display = null;
-        var elGallary = document.querySelector(".gallery");
-        elGallary.style.display = "none";
-
-    }
-    function toggleGallery() {
+    document.querySelector(".search-box").classList.toggle('show');
+    elCanvas.style.display = null;
     var elGallary = document.querySelector(".gallery");
-  
-        elGallary.style.display ="grid";
-        var elCanvas = document.querySelector(".main-container");
-        elCanvas.style.display = "none";
-        var elMemeGallary = document.querySelector(".meme-container");
-        elMemeGallary.style.display = "none";
-        var elCanvas = document.querySelector(".main-container");
-        elCanvas.style.display = "none";
-    }
+    elGallary.style.display = "none";
 
-function toggleMemeGallery() {
-var memestoRender=loadData()
-var elMemeGallary = document.querySelector(".meme-container");
-elMemeGallary.style.display = 'grid';
-var elGallary = document.querySelector(".gallery");
-elGallary.style.display = "none";
-var elCanvas = document.querySelector(".main-container");
-elCanvas.style.display = "none";
-var strHTML = memestoRender.map(function (meme) {
-    return `<img src="${meme}" alt="" class="img"></img>`
-})
-elMemeGallary.innerHTML = strHTML.join('')
+}
+function toggleGallery() {
+    document.querySelector(".search-box").classList.toggle('show');
+    var elGallary = document.querySelector(".gallery");
+    elGallary.style.display = "grid";
+    var elCanvas = document.querySelector(".main-container");
+    elCanvas.style.display = "none";
+    var elMemeGallary = document.querySelector(".meme-container");
+    elMemeGallary.style.display = "none";
+    var elCanvas = document.querySelector(".main-container");
+    elCanvas.style.display = "none";
 }
 
+function toggleMemeGallery() {
+    document.querySelector(".search-box").classList.toggle('show');
+    var memestoRender = loadData()
+    var elMemeGallary = document.querySelector(".meme-container");
+    elMemeGallary.style.display = 'grid';
+    var elGallary = document.querySelector(".gallery");
+    elGallary.style.display = "none";
+    var elCanvas = document.querySelector(".main-container");
+    elCanvas.style.display = "none";
+    var strHTML = memestoRender.map(function (meme) {
+        return `<img onClick="onMemeSelcted(this)" src="${meme}" alt=""  class="img"></img>`
+    })
+    elMemeGallary.innerHTML = strHTML.join('')
+}
 
+function onMemeSelcted(elMeme) {
+var elMemeModal= document.querySelector(".meme-modal")
+elMemeModal.style.display=''
+var elMemeModalImg=document.querySelector(".meme-modal .meme-img")
+elMemeModalImg.src=elMeme.src
+toggleMenu()
+}
+
+function toggleMenu() {
+     document.querySelector(".meme-modal .meme-img").classList.toggle('hide');
+    document.body.classList.toggle('menu-open');
+    
+}
 
 
 function onchangeTextSize(diff) {
@@ -124,8 +152,7 @@ function canvasClicked(ev) {
             ev.offsetY < y &&
             ev.offsetY > y - fontSize) {
             gisclicked = true
-            gCurrLine = i
-            updateGlineSwitcher()
+            if (gCurrLine !== i) updateCurrLine()
             renderImg()
             document.querySelector('.input').value = txt
             document.querySelector(".color-btn").value = gMeme.txts[gCurrLine].color
@@ -136,7 +163,7 @@ function canvasClicked(ev) {
 
 function draw(ev) {
     if (!gisclicked) return
-    gMeme.txts[gCurrLine].Xpos = ev.offsetX
+    gMeme.txts[gCurrLine].Xpos = ev.offsetX 
     gMeme.txts[gCurrLine].Ypos = ev.offsetY
     renderImg()
 
@@ -176,15 +203,14 @@ function onShareClick() {
     }
 }
 
-
-
 function downloadImg(elLink) {
-
-    var imgContent = gCanvas.toDataURL('image/jpeg');
+    var imgContent = gTCanvas.toDataURL('image/jpeg');
     elLink.href = imgContent
     var elModal = document.querySelector(".modal");
     elModal.style.display = 'none';
 }
+
+
 
 
 function onShareClicked(elShare, ev) {
@@ -194,5 +220,12 @@ function onShareClicked(elShare, ev) {
 }
 
 function onSaveClicked() {
-updategMemes()
+    updategMemes()
+}
+
+
+function onSearch() {
+var keyWordToSrc=document.querySelector('.search').value
+setImgFilter(keyWordToSrc)
+renderImgGallery()
 }

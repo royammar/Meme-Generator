@@ -3,7 +3,7 @@
 function uploadImg(elForm, ev) {
 
     ev.preventDefault();
-    document.getElementById('imgData').value = gCanvas.toDataURL("image/jpeg");
+    document.getElementById('imgData').value = gTCanvas.toDataURL("image/jpeg");
 
 
     function onSuccess(uploadedImgUrl) {
@@ -29,5 +29,6 @@ function doUploadImg(elForm, onSuccess) {
             console.error(err)
         })
 }
+
 
 
