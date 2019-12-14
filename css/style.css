@@ -225,7 +225,7 @@ button{
 .color {
   border: 1px solid;
   display: inline-block;
-  background: url(icons/paint-board-and-brush.png) no-repeat;
+  background: url(/icons/paint-board-and-brush.png) no-repeat;
   background-size: 61.96px 64px;
   background-position: center;
   height: 69px;
